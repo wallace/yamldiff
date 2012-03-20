@@ -1,6 +1,6 @@
 # Yamldiff
 
-TODO: Write a gem description
+Yamldiff prints out a list of missing keys for two yaml files.
 
 ## Installation
 
