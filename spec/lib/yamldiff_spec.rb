@@ -102,16 +102,20 @@ describe Yamldiff do
         f.puts("en:")
         f.puts("  app_name:")
         f.puts("    foo: 'Verbosefish'")
+        f.puts("  baz:")
+        f.puts("    bar: 'Verbosefish'")
       end
       File.open(second, "w") do |f|
         f.puts("en:")
         f.puts("  app_name:")
-        f.puts("    foo: 'Something completely different'")
+        f.puts("    foo: 'Verbosefish'")
+        f.puts("  baz:")
+        f.puts("    bar: 'Something completely different'")
       end
 
       result = subject.diff_yaml(first, second)
-      result[second].first.key.should eql("foo")
-      result[second].first.context.should eql(["en", "app_name"])
+      result[second].first.key.should eql("bar")
+      result[second].first.context.should eql(["en", "baz"])
     end
   end
 end

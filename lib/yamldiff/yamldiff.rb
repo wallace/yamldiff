@@ -31,7 +31,7 @@ class Yamldiff
         end
 
         if value.is_a?(Hash)
-          errors << compare_hashes(value, second[key], (context << key))
+          errors << compare_hashes(value, second[key], context + [key])
           next
         end
 
