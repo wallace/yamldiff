@@ -1,3 +1,3 @@
-module Yamldiff
-  VERSION = "0.0.3"
+class Yamldiff
+  VERSION = "0.0.4"
 end
