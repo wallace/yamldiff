@@ -1,6 +1,7 @@
 # Yamldiff
 
-Yamldiff prints out a list of missing keys for two yaml files.
+Given two yaml files, Yamldiff tells you which keys present in the first file
+are not present in the second.
 
 ## Installation
 
@@ -18,7 +19,10 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    require 'yamldiff'
+    result = Yamldiff.diff_yaml('path_to_file_1', 'path_to_file_2')
+    result.inspect
+    # { 'path_to_file_2' => [<array of YamldiffError objects>] }
 
 ## Contributing
 
