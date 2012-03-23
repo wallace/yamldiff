@@ -2,9 +2,10 @@ class Yamldiff
   class << self
     # Compare the two yaml files
     def diff_yaml(first, second, errors_for = {})
-      primary               = YAML.load(File.open(first))
-      secondary             = YAML.load(File.open(second))
-      errors_for[secondary] = compare_hashes(first, second)
+      primary            = YAML.load(File.open(first))
+      secondary          = YAML.load(File.open(second))
+      errors_for[second] = compare_hashes(primary, secondary)
+      errors_for
     end
 
     # Iterate through all keys in the first hash, checking each key for
