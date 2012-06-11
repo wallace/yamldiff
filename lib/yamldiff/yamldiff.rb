@@ -20,13 +20,13 @@ class Yamldiff
 
       first.each do |key, value|
         unless second.key?(key)
-          errors << YamldiffKeyError.new(key, context) # "Missing key : #{key} in path #{context.join(".")}"
+          errors << YamldiffKeyError.new(key, context)
           next
         end
 
         value2 = second[key]
         if (value.class != value2.class)
-          errors << YamldiffKeyValueTypeError.new(key, context) # "Key value type mismatch : #{key} in path #{context.join(".")}"
+          errors << YamldiffKeyValueTypeError.new(key, context)
           next
         end
 
@@ -36,7 +36,7 @@ class Yamldiff
         end
 
         if (value != value2)
-          errors << YamldiffKeyValueError.new(key, context, Diffy::Diff.new(value.to_s + "\n", value2.to_s + "\n")) # "Key value mismatch : #{key} in path #{context.join(".")}"
+          errors << YamldiffKeyValueError.new(key, context, Diffy::Diff.new(value.to_s + "\n", value2.to_s + "\n"))
         end
       end
 
