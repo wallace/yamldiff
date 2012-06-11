@@ -36,7 +36,7 @@ class Yamldiff
         end
 
         if (value != value2)
-          errors << YamldiffKeyValueError.new(key, context) # "Key value mismatch : #{key} in path #{context.join(".")}"
+          errors << YamldiffKeyValueError.new(key, context, Diffy::Diff.new(value.to_s + "\n", value2.to_s + "\n")) # "Key value mismatch : #{key} in path #{context.join(".")}"
         end
       end
 
