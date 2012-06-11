@@ -19,7 +19,18 @@ class YamldiffKeyValueTypeError < YamldiffError
 end
 
 class YamldiffKeyValueError < YamldiffError
+  def initialize(key, context, diff = nil)
+    super key, context
+    @diff = diff
+  end
+
   def to_s
-    "Key value mismatch: #{@key} in path #{@context.join(".")}"
+    output = []
+    output << "Key value mismatch: #{@key} in path #{@context.join(".")}"
+    if @diff
+      output << "Diff:"
+      output << @diff
+    end
+    output.join("\n")
   end
 end
