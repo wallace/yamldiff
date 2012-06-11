@@ -8,13 +8,13 @@ end
 
 class YamldiffKeyError < YamldiffError
   def to_s
-    "Missing key: #{@key} in path #{@context.join(".")}"
+    "Missing key: #{@context.join(".")}.#{@key}"
   end
 end
 
 class YamldiffKeyValueTypeError < YamldiffError
   def to_s
-    "Key value type mismatch: #{@key} in path #{@context.join(".")}"
+    "Key value type mismatch: #{@context.join(".")}.#{@key}"
   end
 end
 
@@ -26,7 +26,7 @@ class YamldiffKeyValueError < YamldiffError
 
   def to_s
     output = []
-    output << "Key value mismatch: #{@key} in path #{@context.join(".")}"
+    output << "Key content differs: #{@context.join(".")}.#{@key}"
     if @diff
       output << "Diff:"
       output << @diff
