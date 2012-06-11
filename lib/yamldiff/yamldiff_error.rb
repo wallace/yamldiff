@@ -6,6 +6,20 @@ class YamldiffError
   end
 end
 
-class YamldiffKeyError < YamldiffError; end
-class YamldiffKeyValueTypeError < YamldiffError; end
-class YamldiffKeyValueError < YamldiffError; end
+class YamldiffKeyError < YamldiffError
+  def to_s
+    "Missing key: #{@key} in path #{@context.join(".")}"
+  end
+end
+
+class YamldiffKeyValueTypeError < YamldiffError
+  def to_s
+    "Key value type mismatch: #{@key} in path #{@context.join(".")}"
+  end
+end
+
+class YamldiffKeyValueError < YamldiffError
+  def to_s
+    "Key value mismatch: #{@key} in path #{@context.join(".")}"
+  end
+end
