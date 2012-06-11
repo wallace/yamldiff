@@ -117,5 +117,21 @@ describe Yamldiff do
       result[second].first.key.should eql("bar")
       result[second].first.context.should eql(["en", "baz"])
     end
+
+    it "diffs the output when the values are different and passes diff to error" do
+      first  = "./en.yml"
+      second = "./es.yml"
+      File.open(first, "w") do |f|
+        f.puts("en: ")
+        f.puts("  app_name: 'Verbosefish'")
+      end
+      File.open(second, "w") do |f|
+        f.puts("en: ")
+        f.puts("  app_name: 'Verboszefish'")
+      end
+      Diffy::Diff.expects(:new).with("Verbosefish\n", "Verboszefish\n").returns("DIFF")
+      YamldiffKeyValueError.expects(:new).with('app_name', ['en'], 'DIFF')
+      result = subject.diff_yaml(first, second)
+    end
   end
 end
