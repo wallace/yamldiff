@@ -14,6 +14,7 @@ Gem::Specification.new do |gem|
   gem.name          = "yamldiff"
   gem.require_paths = ["lib"]
   gem.version       = Yamldiff::VERSION
+  gem.add_dependency 'diffy'
   gem.add_development_dependency 'fakefs'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
