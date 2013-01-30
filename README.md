@@ -1,4 +1,5 @@
 # Yamldiff
+[![Build Status](https://travis-ci.org/wallace/yamldiff.png)](https://travis-ci.org/wallace/yamldiff)
 
 Given two yaml files, Yamldiff tells you which keys present in the first file
 are not present in the second.
