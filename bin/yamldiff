@@ -3,10 +3,14 @@
 $LOAD_PATH.unshift(File.expand_path("../../lib", __FILE__))
 require 'yamldiff'
 
-if ARGV.size != 2
-  $stderr.puts "USAGE: yamldiff file1 file2"
+if ARGV.size != 2 && !(ARGV.size == 3 &&  ARGV[0] == "-i")
+  $stderr.puts "USAGE: yamldiff [-i] file1 file2"
   exit 1
 end
 
-errors = Yamldiff.diff_yaml(ARGV[0], ARGV[1])
-puts errors[ARGV[1]]
+if ARGV.size == 3
+  puts Yamlcomm.comm_yaml(ARGV[1], ARGV[2])
+else
+  errors = Yamldiff.diff_yaml(ARGV[0], ARGV[1])
+  puts errors[ARGV[1]]
+end

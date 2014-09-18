@@ -44,3 +44,46 @@ class Yamldiff
     end
   end
 end
+
+class Yamlcomm
+  class << self
+    # Compare the two yaml files
+    def comm_yaml(first, second, common = [])
+      primary            = YAML.load(ERB.new(File.read(first)).result)
+      secondary          = YAML.load(ERB.new(File.read(second)).result)
+      common = compare_hashes(primary, secondary)
+      common
+    end
+
+    # Adapted from yamldiff.rb
+    def compare_hashes(first, second, context = [])
+      common = []
+
+      first.each do |key, value|
+
+        unless second
+          next
+        end
+
+        if value.is_a?(Hash)
+          common << compare_hashes(value, second[key], context + [key])
+          next
+        end
+
+        if second.key?(key)
+          value2 = second[key]
+          if value.class == value2.class
+            if value == value2
+              s = ""
+              context.each { |p| s += p + "." }
+              common << s + key
+            end
+          end
+        end
+
+      end
+
+      common.flatten
+    end
+  end
+end
