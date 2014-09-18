@@ -2,6 +2,8 @@
 
 $LOAD_PATH.unshift(File.expand_path("../../lib", __FILE__))
 require 'yamldiff'
+require 'set'
+#require 'hex_string'
 
 if ARGV.size != 2 && !(ARGV.size == 3 &&  ARGV[0] == "-i")
   $stderr.puts "USAGE: yamldiff [-i] file1 file2"
@@ -9,7 +11,17 @@ if ARGV.size != 2 && !(ARGV.size == 3 &&  ARGV[0] == "-i")
 end
 
 if ARGV.size == 3
-  puts Yamlcomm.comm_yaml(ARGV[1], ARGV[2])
+  begin
+    #ignore = File.readlines(ARGV[2] + ".ignore").each{|line| line.chomp!}
+    ignore = Set.new File.readlines(ARGV[2] + ".ignore").map(&:chomp)
+    #ignore = File.open(ARGV[2] + ".ignore", "r"){|file| file.readlines.collect{|line| line.chomp}}
+    common = Set.new Yamlcomm.comm_yaml(ARGV[1], ARGV[2])
+    #print ignore[0].to_hex_string + "\n"
+    #print common[0].to_hex_string + "\n"
+    puts (common - ignore).to_a()
+  rescue Errno::ENOENT
+    puts Yamlcomm.comm_yaml(ARGV[1], ARGV[2])
+  end
 else
   errors = Yamldiff.diff_yaml(ARGV[0], ARGV[1])
   puts errors[ARGV[1]]
