@@ -5,13 +5,13 @@ describe Yamldiff do
 
   describe ".compare_hashes" do
     it "should be empty for equal hashes" do
-      subject.compare_hashes({ a: 1 }, { a: 1 }).should be_empty
+      expect(subject.compare_hashes({ a: 1 }, { a: 1 })).to be_empty
     end
 
     it "should be empty for nested hashes" do
       first  = { a: { b: 2 } }
       second = { a: { b: 2 } }
-      subject.compare_hashes(first, second).should be_empty
+      expect(subject.compare_hashes(first, second)).to be_empty
     end
 
     it "should recognize when a key is missing" do
@@ -19,29 +19,29 @@ describe Yamldiff do
       second = { a: 1 }
       result = subject.compare_hashes(first, second).first
 
-      result.should be_an_instance_of(YamldiffKeyError)
-      result.key.should eql :b
-      result.context.should be_empty
+      expect(result).to be_an_instance_of(YamldiffKeyError)
+      expect(result.key).to eql :b
+      expect(result.context).to be_empty
     end
 
     it "should recognize when two keys' values are of a different type" do
       first  = { a:  1  }
       second = { a: "1" }
-
       result = subject.compare_hashes(first, second).first
-      result.should be_an_instance_of(YamldiffKeyValueTypeError)
-      result.key.should eql :a
-      result.context.should be_empty
+
+      expect(result).to be_an_instance_of(YamldiffKeyValueTypeError)
+      expect(result.key).to eql :a
+      expect(result.context).to be_empty
     end
 
     it "should recognize when two keys' values are not equal" do
       first  = { a: { b: 2 } }
       second = { a: { b: 1 } }
-
       result = subject.compare_hashes(first, second).first
-      result.should be_an_instance_of(YamldiffKeyValueError)
-      result.key.should eql :b
-      result.context.should == [:a]
+
+      expect(result).to be_an_instance_of(YamldiffKeyValueError)
+      expect(result.key).to eql :b
+      expect(result.context).to eql [:a]
     end
   end
 
@@ -58,7 +58,7 @@ describe Yamldiff do
         f.puts("  app_name: 'Verbosefish'")
       end
 
-      subject.diff_yaml("./en.yml", "./es.yml").values.all? {|e| e.should eql([])}
+      expect(subject.diff_yaml("./en.yml", "./es.yml").values).to all(eql([]))
     end
 
     it "returns one top level error", fakefs: true do
@@ -74,7 +74,7 @@ describe Yamldiff do
       end
 
       result = subject.diff_yaml(first, second)
-      result[second].first.key.should eql("en")
+      expect(result[second].first.key).to eql("en")
     end
 
     it "returns second level error", fakefs: true do
@@ -90,8 +90,8 @@ describe Yamldiff do
       end
 
       result = subject.diff_yaml(first, second)
-      result[second].first.key.should eql("app_name")
-      result[second].first.context.should eql(["en"])
+      expect(result[second].first.key).to eql("app_name")
+      expect(result[second].first.context).to eql(["en"])
     end
 
     it "returns third level error", fakefs: true do
@@ -114,8 +114,8 @@ describe Yamldiff do
       end
 
       result = subject.diff_yaml(first, second)
-      result[second].first.key.should eql("bar")
-      result[second].first.context.should eql(["en", "baz"])
+      expect(result[second].first.key).to eql("bar")
+      expect(result[second].first.context).to eql(["en", "baz"])
     end
 
     it "diffs the output when the values are different and passes diff to error" do
