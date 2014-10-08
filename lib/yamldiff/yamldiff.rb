@@ -16,9 +16,7 @@ class Yamldiff
     #
     # Adapted from http://stackoverflow.com/a/6274367/91029
     def compare_hashes(first, second, context = [])
-      errors = []
-
-      first.each do |key, value|
+      first.each_with_object([]) do |(key, value), errors|
         unless second.key?(key)
           errors << YamldiffKeyError.new(key, context)
           next
@@ -38,9 +36,7 @@ class Yamldiff
         if (value != value2)
           errors << YamldiffKeyValueError.new(key, context, Diffy::Diff.new(value.to_s + "\n", value2.to_s + "\n"))
         end
-      end
-
-      errors.flatten
+      end.flatten
     end
   end
 end
