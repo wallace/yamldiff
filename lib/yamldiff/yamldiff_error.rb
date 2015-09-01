@@ -17,12 +17,6 @@ class YamldiffKeyError < YamldiffError
   end
 end
 
-class YamldiffKeyValueTypeError < YamldiffError
-  def to_s
-    "Key value type mismatch: #{path}"
-  end
-end
-
 class YamldiffKeyValueError < YamldiffError
   attr_reader :diff
 

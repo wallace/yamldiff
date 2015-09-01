@@ -24,7 +24,7 @@ class Yamldiff
 
         value2 = second[key]
         if (value.class != value2.class)
-          errors << YamldiffKeyValueTypeError.new(key, context)
+          errors << YamldiffKeyValueError.new(key, context, Diffy::Diff.new(value.to_s + "\n", value2.to_s + "\n"))
           next
         end
 
