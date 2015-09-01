@@ -29,7 +29,7 @@ describe Yamldiff do
       second = { a: "1" }
       result = subject.compare_hashes(first, second).first
 
-      expect(result).to be_an_instance_of(YamldiffKeyValueTypeError)
+      expect(result).to be_an_instance_of(YamldiffKeyValueError)
       expect(result.key).to eql :a
       expect(result.context).to be_empty
     end

@@ -8,14 +8,6 @@ describe YamldiffKeyError, "#to_s" do
   end
 end
 
-describe YamldiffKeyValueTypeError, "#to_s" do
-  subject(:key_value_type_error) { YamldiffKeyValueTypeError.new('key', ['root', 'namespace']) }
-
-  it "outputs human readable text" do
-    expect(key_value_type_error.to_s).to eql "Key value type mismatch: root.namespace.key"
-  end
-end
-
 describe YamldiffKeyValueError, "#to_s" do
   context "without a diff" do
     subject(:key_value_error) { YamldiffKeyValueError.new('key', ['root', 'namespace']) }
