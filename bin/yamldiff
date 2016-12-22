@@ -8,5 +8,9 @@ if ARGV.size != 2
   exit 1
 end
 
-errors = Yamldiff.diff_yaml(ARGV[0], ARGV[1])
-puts errors[ARGV[1]]
+errors = Yamldiff.diff_yaml(ARGV[0], ARGV[1])[ARGV[1]]
+
+unless errors.empty?
+  puts errors
+  exit 1
+end
