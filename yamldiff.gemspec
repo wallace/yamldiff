@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Yamldiff::VERSION
 
-  gem.add_dependency 'diffy', '~> 3.0.6'
+  gem.add_dependency 'diffy', '>= 3.0.6', '< 3.5.0'
 
   gem.add_development_dependency 'fakefs', '~> 0.6.0'
   gem.add_development_dependency 'rake',   '~> 10.3'
