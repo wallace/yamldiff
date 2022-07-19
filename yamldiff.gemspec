@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'diffy', '>= 3.0.6', '< 3.5.0'
 
   gem.add_development_dependency 'fakefs', '~> 0.6.0'
-  gem.add_development_dependency 'rake',   '~> 10.3'
+  gem.add_development_dependency 'rake',   '~> 13.0'
   gem.add_development_dependency 'rspec',  '~> 3.1.0'
   gem.add_development_dependency 'mocha',  '~> 1.1.0'
 end
