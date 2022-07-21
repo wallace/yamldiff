@@ -2,11 +2,22 @@
 
 $LOAD_PATH.unshift(File.expand_path("../../lib", __FILE__))
 require 'yamldiff'
+require 'set'
 
-if ARGV.size != 2
-  $stderr.puts "USAGE: yamldiff file1 file2"
+if ARGV.size != 2 && !(ARGV.size == 3 &&  ARGV[0] == "-i")
+  $stderr.puts "USAGE: yamldiff [-i] file1 file2"
   exit 1
 end
 
-errors = Yamldiff.diff_yaml(ARGV[0], ARGV[1])
-puts errors[ARGV[1]]
+if ARGV.size == 3
+  begin
+    ignore = Set.new File.readlines(ARGV[2] + ".ignore").map(&:chomp)
+    common = Set.new Yamlcomm.comm_yaml(ARGV[1], ARGV[2])
+    puts (common - ignore).to_a()
+  rescue Errno::ENOENT
+    puts Yamlcomm.comm_yaml(ARGV[1], ARGV[2])
+  end
+else
+  errors = Yamldiff.diff_yaml(ARGV[0], ARGV[1])
+  puts errors[ARGV[1]]
+end
